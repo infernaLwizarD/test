@@ -13,6 +13,6 @@ my @quotes = map />(.*)</, (grep /class="text"/, @content);
 open FILE, ">file.txt";
 print FILE "[";
 foreach (@quotes) {
-	print FILE "\n\t{\n\t\t" . '"text" : "' . $_ . "\"\n\t}" . (($quotes[$#quotes] eq $_) ? "\n" : ",\n");
+	print FILE "\n\t{\n\t\t\"text\" : \"" . $_ . "\"\n\t}" . (($quotes[$#quotes] eq $_) ? "\n" : ",\n");
 }
 print FILE "]";
