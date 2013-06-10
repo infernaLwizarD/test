@@ -9,10 +9,12 @@ $request->header('Accept' => 'text/html');
 my $response = $ua->request($request);
 
 my @content = split "\n", $response->content;
+my @numbers = map />#(.*)<\/a/, (grep /class="id"/, @content);
 my @quotes = map />(.*)</, (grep /class="text"/, @content);
+
 open FILE, ">file.txt";
 print FILE "[";
-foreach (@quotes) {
-	print FILE "\n\t{\n\t\t\"text\" : \"" . $_ . "\"\n\t}" . (($quotes[$#quotes] eq $_) ? "\n" : ",\n");
+foreach (0..$#numbers) {
+	print FILE "\n\t{\n\t\t\"number\" : $numbers[$_],\n\t\t\"text\" : \"" . $quotes[$_] . "\"\n\t}" . (($quotes[$#quotes] eq $quotes[$_]) ? "\n" : ",\n");
 }
 print FILE "]";
