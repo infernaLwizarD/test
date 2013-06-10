@@ -20,9 +20,8 @@ foreach (@content) {
 	}
 }
 
-open FILE, ">file.txt";
-print FILE "[";
+print "[";
 foreach (0..$#numbers) {
-	print FILE "\n\t{\n\t\t\"number\" : $numbers[$_],\n\t\t\"text\" : \"" . $quotes[$_] . "\"\n\t}" . (($quotes[$#quotes] eq $quotes[$_]) ? "\n" : ",\n");
+	print "\n\t{\n\t\t\"number\" : $numbers[$_],\n\t\t\"text\" : \"" . $quotes[$_] . "\"\n\t}" . (($quotes[$#quotes] eq $quotes[$_]) ? "\n" : ",\n");
 }
-print FILE "]";
+print "]";
