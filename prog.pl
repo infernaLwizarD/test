@@ -9,8 +9,16 @@ $request->header('Accept' => 'text/html');
 my $response = $ua->request($request);
 
 my @content = split "\n", $response->content;
-my @numbers = map />#(.*)<\/a/, (grep /class="id"/, @content);
-my @quotes = map />(.*)</, (grep /class="text"/, @content);
+my (@numbers, @quotes);
+foreach (@content) {
+	if (/class="id"/) {
+		/>#(.*)<\/a/;
+		push @numbers, $1;
+	} elsif (/class="text"/) {
+		/>(.*)</;
+		push @quotes, $1;
+	}
+}
 
 open FILE, ">file.txt";
 print FILE "[";
